@@ -1,7 +1,7 @@
 # Project 2 Overview: Examining the racialization of American public opinion utilizing text analysis
 ## Project Goal
 * Examine the role of anti-China elite rhetoric in aggregating public opinion up to the level of American foreign policymaking. 
-## Mehtod
+## Method
 * Analyze a large-scale televised political advertising data to find the prevalence of anti-China political messages across the United States
 * Conduct Exploratory Data Analysis on Wesleyan Media Project (WMP) tracking data
 * Convert 30,000 campaign video data to raw text using IBM’s Speech-To-Text API with Python
