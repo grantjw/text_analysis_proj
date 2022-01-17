@@ -5,9 +5,14 @@
 * Analyze a large-scale televised political advertising data to find the prevalence of anti-China political messages across the United States
 ## Data
 * The Wesleyan Media Project (WMP) Data: Kantar Media/CMAG tracking data and video files covering all broadcast television political advertising from the 210 media markets in the United States
+
+
 * The tracking and video data is broken into year and level of races: 
-The Video data is broken up by: 
+
+
 year (e.g., 2006; 2010; 2018) 
+
+
 level of race (e.g., President; US Senate; US House; Governor; and down ballot, which includes all other state and local races, including judicial)
 
 
