@@ -3,10 +3,10 @@
 * Examine the role of anti-China elite rhetoric in aggregating public opinion up to the level of American foreign policymaking. 
 ## Method
 * Analyze a large-scale televised political advertising data to find the prevalence of anti-China political messages across the United States
-* Conduct Exploratory Data Analysis on Wesleyan Media Project (WMP) tracking data
-* Convert 30,000 campaign video data to raw text using IBM’s Speech-To-Text API with Python
-* Utilize converted raw text data to conduct EDA, Structural Topic Modeling, and Sentiment Analysis using R, Excel, Tableau 
-* Create a new dataset (that contains variables generated from Sentiment Analysis, merged with fips code and designed media market) for further analysis 
+* Conduct data cleaning/exploratory data Analysis(EDA) on Wesleyan Media Project (WMP) tracking data (folder 1)
+* Convert 30,000 campaign video data to raw text using IBM’s Speech-To-Text API with Python (folder 2) 
+* Utilize converted raw text data to conduct EDA, Wordcloud, Structural Topic Modeling, and Sentiment Analysis using R, Excel, Tableau (folder 3) 
+* Create a new dataset (that contains variables generated from Sentiment Analysis, merged with fips code and designed media market) for further analysis (folder 4) 
 
 ## Results & Findings
 * Found sentiment discrepancies between China and non-China related advertisements for both Democrats and Republicans over multiple types of elections.
