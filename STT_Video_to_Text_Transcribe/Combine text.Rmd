@@ -1,0 +1,483 @@
+---
+title: "Untitled"
+output: html_document
+---
+Import text 
+```{r}
+rm(list=ls())
+library("readtext")
+# install.packages("readtext")
+
+Gov_2006 <- readtext::readtext("C:/Users/grant/Desktop/Desktop/Video to Text/2006/2006Gov_txt/*.txt")
+Federal_2006 <- readtext::readtext("C:/Users/grant/Desktop/Desktop/Video to Text/2006/2006Federal_txt/*.txt")
+
+Gov_2010 <- readtext::readtext("C:/Users/grant/Desktop/Desktop/Video to Text/2010/2010Gov_txt/*.txt")
+Senate_2010 <- readtext::readtext("C:/Users/grant/Desktop/Desktop/Video to Text/2010/2010Senate_txt/*.txt")
+House_2010 <- readtext::readtext("C:/Users/grant/Desktop/Desktop/Video to Text/2010/2010House_txt/*.txt")
+
+Gov_2012 <- readtext::readtext("C:/Users/grant/Desktop/Desktop/Video to Text/2012/2012Gov_txt/*.txt")
+House_2012 <- readtext::readtext("C:/Users/grant/Desktop/Desktop/Video to Text/2012/2012House_txt/*.txt")
+Pres_2012 <- readtext::readtext("C:/Users/grant/Desktop/Desktop/Video to Text/2012/2012Pres_txt/*.txt")
+Senate_2012 <- readtext::readtext("C:/Users/grant/Desktop/Desktop/Video to Text/2012/2012Senate_txt/*.txt")
+
+Gov_2014 <- readtext::readtext("C:/Users/grant/Desktop/Desktop/Video to Text/2014/2014Gov_txt/*.txt")
+House_2014 <- readtext::readtext("C:/Users/grant/Desktop/Desktop/Video to Text/2014/2014House_txt/*.txt")
+Senate_2014 <- readtext::readtext("C:/Users/grant/Desktop/Desktop/Video to Text/2014/2014Senate_txt/*.txt")
+
+Gov_2016 <- readtext::readtext("C:/Users/grant/Desktop/Desktop/Video to Text/2016/2016Gov_txt/*.txt")
+House_2016 <- readtext::readtext("C:/Users/grant/Desktop/Desktop/Video to Text/2016/2016House_txt/*.txt")
+Senate_2016 <- readtext::readtext("C:/Users/grant/Desktop/Desktop/Video to Text/2016/2016Senate_txt/*.txt")
+Pres_2016 <- readtext::readtext("C:/Users/grant/Desktop/Desktop/Video to Text/2016/2016Pres_txt/*.txt")
+
+Gov_2018 <- readtext::readtext("C:/Users/grant/Desktop/Desktop/Video to Text/2018/2018Gov_txt/*.txt")
+House_2018 <- readtext::readtext("C:/Users/grant/Desktop/Desktop/Video to Text/2018/2018House_txt/*.txt")
+Senate_2018 <- readtext::readtext("C:/Users/grant/Desktop/Desktop/Video to Text/2018/2018Senate_txt/*.txt")
+```
+
+Remove ".txt" from doc_id column for later merging 
+```{r}
+library(stringr)
+
+LIST <- list(Gov_2006, Federal_2006,Gov_2010,Senate_2010,House_2010,Gov_2012,House_2012,Pres_2012,Senate_2012,Gov_2014,House_2014,Senate_2014,Gov_2016,House_2016,Senate_2016,Pres_2016,Gov_2018,House_2018,Senate_2018)
+
+info <- function(dataframe){
+  gsub(pattern = ".txt", replacement = "", x = dataframe$doc_id)
+}
+
+data <- lapply(X = LIST, FUN = info)   
+
+#save 
+Gov_2006$doc_id <- data[[1]]
+Federal_2006$doc_id <- data[[2]]
+Gov_2010$doc_id <- data[[3]]
+Senate_2010$doc_id <- data[[4]]
+House_2010$doc_id <- data[[5]]
+Gov_2012$doc_id <- data[[6]]
+House_2012$doc_id <- data[[7]]
+Pres_2012$doc_id <- data[[8]]
+Senate_2012$doc_id <- data[[9]]
+Gov_2014$doc_id <- data[[10]]
+House_2014$doc_id <- data[[11]]
+Senate_2014$doc_id <- data[[12]]
+Gov_2016$doc_id <- data[[13]]
+House_2016$doc_id <- data[[14]]
+Senate_2016$doc_id <- data[[15]]
+Pres_2016$doc_id <- data[[16]]
+Gov_2018$doc_id <- data[[17]]
+House_2018$doc_id <- data[[18]]
+Senate_2018$doc_id <- data[[19]]
+```
+
+
+Import original data, keep only relevant columns 
+```{r}
+library(haven)
+#2006
+federal_2006 <- read_dta("C:/Users/grant/Desktop/Desktop/1/wmp-federal-2006-v1.0.dta")
+col <- c("vidfile","race", "airdate", "categorystate", "party", "issue20", "issue65",
+          "fear", "anger", "sadness", "market", "dma")
+federal_2006 <- federal_2006[,col]
+
+gov_2006 <- read_dta("C:/Users/grant/Desktop/Desktop/1/wmp-gov-2006-v1.0.dta")
+col <- c("vidfile","race", "airdate", "categorystate", "party", "issue20", "issue65",
+          "fear", "anger", "sadness", "market", "dma")
+gov_2006 <- gov_2006[,col]
+
+#2010
+gov_2010 <- read_dta("C:/Users/grant/Desktop/Desktop/1/wmp-gov-2010-v1.2.dta")
+col <- c("vidfile","race", "airdate", "state", "party", "issue20", "issue65",
+          "fear", "anger", "sadness", "market", "dma")
+gov_2010 <- gov_2010[,col]
+names(gov_2010)[names(gov_2010) == "state"] <- "categorystate"
+
+
+federal_2010 <- read_dta("C:/Users/grant/Desktop/Desktop/1/wmp-federal-2010-v1.3.dta")
+col <- c("vidfile","race", "airdate", "state", "party", "issue20", "issue65",
+          "fear", "anger", "sadness", "market", "dma")
+federal_2010 <- federal_2010[,col]
+names(federal_2010)[names(federal_2010) == "state"] <- "categorystate"
+
+
+#2012
+pres_2012 <- read_dta("C:/Users/grant/Desktop/Desktop/1/wmp-pres-2012-v1.2.dta")
+col <- c("vidfile","race", "airdate", "categorystate", "affiliation", "issue20", "issue65",
+          "fear", "anger", "sadness", "market", "dma")
+pres_2012 <- pres_2012[,col]
+names(pres_2012)[names(pres_2012) == "affiliation"] <- "party"
+
+
+gov_2012 <- read_dta("C:/Users/grant/Desktop/Desktop/1/wmp-gov-2012-v1.1.dta")
+col <- c("vidfile", "race", "airdate", "categorystate", "party", "issue20", "issue65",
+          "fear", "anger", "sadness", "market", "dmaid")
+gov_2012 <- gov_2012[,col]
+names(gov_2012)[names(gov_2012) == "dmaid"] <- "dma"
+
+
+house_2012 <- read_dta("C:/Users/grant/Desktop/Desktop/1/wmp-house-2012-v1.1.dta")
+col <- c("vidfile", "race", "airdate", "categorystate", "party", "issue20", "issue65",
+          "fear", "anger", "sadness", "market", "dmaid")
+house_2012 <- house_2012[,col]
+names(house_2012)[names(house_2012) == "dmaid"] <- "dma"
+
+
+senate_2012 <- read_dta("C:/Users/grant/Desktop/Desktop/1/wmp-senate-2012-v1.1.dta")
+col <- c("vidfile", "race", "airdate", "categorystate", "party", "issue20", "issue65",
+          "fear", "anger", "sadness", "market", "dmaid")
+senate_2012 <- senate_2012[,col]
+names(senate_2012)[names(senate_2012) == "dmaid"] <- "dma"
+
+#2014
+house_2014 <- read_dta("C:/Users/grant/Desktop/Desktop/1/wmp-house-2014-v1.0.dta")
+col <- c("vidfile", "race", "airdate", "categorystate", "affiliation", "issue20", "issue65",
+          "fear", "anger", "sadness", "market", "dma")
+house_2014 <- house_2014[,col]
+names(house_2014)[names(house_2014) == "affiliation"] <- "party"
+
+gov_2014 <- read_dta("C:/Users/grant/Desktop/Desktop/1/wmp-gov-2014-v1.1.dta")
+gov_2014 <- gov_2014[,col]
+names(gov_2014)[names(gov_2014) == "affiliation"] <- "party"
+
+
+senate_2014 <- read_dta("C:/Users/grant/Desktop/Desktop/1/wmp-senate-2014-v1.0.dta")
+senate_2014 <- senate_2014[,col]
+names(senate_2014)[names(senate_2014) == "affiliation"] <- "party"
+
+
+#2016 
+gov_2016 <- read_dta("C:/Users/grant/Desktop/Desktop/1/wmp-gov-2016-v1.0.dta")
+col <- c("vidfile", "race", "airdate", "categorystate", "party", "issue20", "issue65",
+          "fear", "anger", "sadness", "market", "dma")
+gov_2016 <- gov_2016[,col]
+
+house_2016 <- read_dta("C:/Users/grant/Desktop/Desktop/1/wmp-house-2016-v1.0.dta")
+house_2016 <- house_2016[,col]
+
+senate_2016 <- read_dta("C:/Users/grant/Desktop/Desktop/1/wmp-senate-2016-v1.0.dta")
+senate_2016 <- senate_2016[,col]
+
+pres_2016 <- read_dta("C:/Users/grant/Desktop/Desktop/1/wmp-pres-2016-v1.1.dta")
+pres_2016 <- pres_2016[,col]
+
+#2018 
+house_2018 <- read_dta("C:/Users/grant/Desktop/Desktop/1/wmp-house-2018-v1.0.dta")
+house_2018 <- house_2018[,col]
+
+senate_2018 <- read_dta("C:/Users/grant/Desktop/Desktop/1/wmp-senate-2018-v1.0.dta")
+senate_2018 <- senate_2018[,col]
+
+gov_2018 <- read_dta("C:/Users/grant/Desktop/Desktop/1/wmp-gov-2018-v1.0.dta")
+gov_2018 <- gov_2018[,col]
+```
+
+#2010 is peculiar. We need to stack 2010House_txt and 2010Senate_txt into 2010Federal_org 
+```{r}
+Federal_2010 <- rbind(House_2010, Senate_2010)
+```
+
+
+
+
+Make datatype of columns consistent
+```{r}
+gov_2006$race <- as.factor(gov_2006$race)
+gov_2006$categorystate <- as.factor(gov_2006$categorystate)
+gov_2006$party <- as.factor(gov_2006$party)
+gov_2006$issue20 <- as.factor(gov_2006$issue20)
+gov_2006$issue65 <- as.factor(gov_2006$issue65)
+gov_2006$fear <- as.factor(gov_2006$fear)
+gov_2006$anger <- as.factor(gov_2006$anger)
+gov_2006$sadness <- as.factor(gov_2006$sadness)
+
+federal_2006$race <- as.factor(federal_2006$race)
+federal_2006$categorystate <- as.factor(federal_2006$categorystate)
+federal_2006$party <- as.factor(federal_2006$party)
+federal_2006$issue20 <- as.factor(federal_2006$issue20)
+federal_2006$issue65 <- as.factor(federal_2006$issue65)
+federal_2006$fear <- as.factor(federal_2006$fear)
+federal_2006$anger <- as.factor(federal_2006$anger)
+federal_2006$sadness <- as.factor(federal_2006$sadness)
+
+gov_2010$race <- as.factor(gov_2010$race)
+gov_2010$categorystate <- as.factor(gov_2010$categorystate)
+gov_2010$party <- as.factor(gov_2010$party)
+gov_2010$issue20 <- as.factor(gov_2010$issue20)
+gov_2010$issue65 <- as.factor(gov_2010$issue65)
+gov_2010$fear <- as.factor(gov_2010$fear)
+gov_2010$anger <- as.factor(gov_2010$anger)
+gov_2010$sadness <- as.factor(gov_2010$sadness)
+
+federal_2010$race <- as.factor(federal_2010$race)
+federal_2010$categorystate <- as.factor(federal_2010$categorystate)
+federal_2010$party <- as.factor(federal_2010$party)
+federal_2010$issue20 <- as.factor(federal_2010$issue20)
+federal_2010$issue65 <- as.factor(federal_2010$issue65)
+federal_2010$fear <- as.factor(federal_2010$fear)
+federal_2010$anger <- as.factor(federal_2010$anger)
+federal_2010$sadness <- as.factor(federal_2010$sadness)
+
+gov_2012$race <- as.factor(gov_2012$race)
+gov_2012$categorystate <- as.factor(gov_2012$categorystate)
+gov_2012$party <- as.factor(gov_2012$party)
+gov_2012$issue20 <- as.factor(gov_2012$issue20)
+gov_2012$issue65 <- as.factor(gov_2012$issue65)
+gov_2012$fear <- as.factor(gov_2012$fear)
+gov_2012$anger <- as.factor(gov_2012$anger)
+gov_2012$sadness <- as.factor(gov_2012$sadness)
+
+house_2012$race <- as.factor(house_2012$race)
+house_2012$categorystate <- as.factor(house_2012$categorystate)
+house_2012$party <- as.factor(house_2012$party)
+house_2012$issue20 <- as.factor(house_2012$issue20)
+house_2012$issue65 <- as.factor(house_2012$issue65)
+house_2012$fear <- as.factor(house_2012$fear)
+house_2012$anger <- as.factor(house_2012$anger)
+house_2012$sadness <- as.factor(house_2012$sadness)
+
+pres_2012$race <- as.factor(pres_2012$race)
+pres_2012$categorystate <- as.factor(pres_2012$categorystate)
+pres_2012$party <- as.factor(pres_2012$party)
+pres_2012$issue20 <- as.factor(pres_2012$issue20)
+pres_2012$issue65 <- as.factor(pres_2012$issue65)
+pres_2012$fear <- as.factor(pres_2012$fear)
+pres_2012$anger <- as.factor(pres_2012$anger)
+pres_2012$sadness <- as.factor(pres_2012$sadness)
+
+senate_2012$race <- as.factor(senate_2012$race)
+senate_2012$categorystate <- as.factor(senate_2012$categorystate)
+senate_2012$party <- as.factor(senate_2012$party)
+senate_2012$issue20 <- as.factor(senate_2012$issue20)
+senate_2012$issue65 <- as.factor(senate_2012$issue65)
+senate_2012$fear <- as.factor(senate_2012$fear)
+senate_2012$anger <- as.factor(senate_2012$anger)
+senate_2012$sadness <- as.factor(senate_2012$sadness)
+
+gov_2014$race <- as.factor(gov_2014$race)
+gov_2014$categorystate <- as.factor(gov_2014$categorystate)
+gov_2014$party <- as.factor(gov_2014$party)
+gov_2014$issue20 <- as.factor(gov_2014$issue20)
+gov_2014$issue65 <- as.factor(gov_2014$issue65)
+gov_2014$fear <- as.factor(gov_2014$fear)
+gov_2014$anger <- as.factor(gov_2014$anger)
+gov_2014$sadness <- as.factor(gov_2014$sadness)
+
+house_2014$race <- as.factor(house_2014$race)
+house_2014$categorystate <- as.factor(house_2014$categorystate)
+house_2014$party <- as.factor(house_2014$party)
+house_2014$issue20 <- as.factor(house_2014$issue20)
+house_2014$issue65 <- as.factor(house_2014$issue65)
+house_2014$fear <- as.factor(house_2014$fear)
+house_2014$anger <- as.factor(house_2014$anger)
+house_2014$sadness <- as.factor(house_2014$sadness)
+
+senate_2014$race <- as.factor(senate_2014$race)
+senate_2014$categorystate <- as.factor(senate_2014$categorystate)
+senate_2014$party <- as.factor(senate_2014$party)
+senate_2014$issue20 <- as.factor(senate_2014$issue20)
+senate_2014$issue65 <- as.factor(senate_2014$issue65)
+senate_2014$fear <- as.factor(senate_2014$fear)
+senate_2014$anger <- as.factor(senate_2014$anger)
+senate_2014$sadness <- as.factor(senate_2014$sadness)
+
+gov_2016$race <- as.factor(gov_2016$race)
+gov_2016$categorystate <- as.factor(gov_2016$categorystate)
+gov_2016$party <- as.factor(gov_2016$party)
+gov_2016$issue20 <- as.factor(gov_2016$issue20)
+gov_2016$issue65 <- as.factor(gov_2016$issue65)
+gov_2016$fear <- as.factor(gov_2016$fear)
+gov_2016$anger <- as.factor(gov_2016$anger)
+gov_2016$sadness <- as.factor(gov_2016$sadness)
+
+house_2016$race <- as.factor(house_2016$race)
+house_2016$categorystate <- as.factor(house_2016$categorystate)
+house_2016$party <- as.factor(house_2016$party)
+house_2016$issue20 <- as.factor(house_2016$issue20)
+house_2016$issue65 <- as.factor(house_2016$issue65)
+house_2016$fear <- as.factor(house_2016$fear)
+house_2016$anger <- as.factor(house_2016$anger)
+house_2016$sadness <- as.factor(house_2016$sadness)
+
+senate_2016$race <- as.factor(senate_2016$race)
+senate_2016$categorystate <- as.factor(senate_2016$categorystate)
+senate_2016$party <- as.factor(senate_2016$party)
+senate_2016$issue20 <- as.factor(senate_2016$issue20)
+senate_2016$issue65 <- as.factor(senate_2016$issue65)
+senate_2016$fear <- as.factor(senate_2016$fear)
+senate_2016$anger <- as.factor(senate_2016$anger)
+senate_2016$sadness <- as.factor(senate_2016$sadness)
+
+pres_2016$race <- as.factor(pres_2016$race)
+pres_2016$categorystate <- as.factor(pres_2016$categorystate)
+pres_2016$party <- as.factor(pres_2016$party)
+pres_2016$issue20 <- as.factor(pres_2016$issue20)
+pres_2016$issue65 <- as.factor(pres_2016$issue65)
+pres_2016$fear <- as.factor(pres_2016$fear)
+pres_2016$anger <- as.factor(pres_2016$anger)
+pres_2016$sadness <- as.factor(pres_2016$sadness)
+
+gov_2018$race <- as.factor(gov_2018$race)
+gov_2018$categorystate <- as.factor(gov_2018$categorystate)
+gov_2018$party <- as.factor(gov_2018$party)
+gov_2018$issue20 <- as.factor(gov_2018$issue20)
+gov_2018$issue65 <- as.factor(gov_2018$issue65)
+gov_2018$fear <- as.factor(gov_2018$fear)
+gov_2018$anger <- as.factor(gov_2018$anger)
+gov_2018$sadness <- as.factor(gov_2018$sadness)
+
+house_2018$race <- as.factor(house_2018$race)
+house_2018$categorystate <- as.factor(house_2018$categorystate)
+house_2018$party <- as.factor(house_2018$party)
+house_2018$issue20 <- as.factor(house_2018$issue20)
+house_2018$issue65 <- as.factor(house_2018$issue65)
+house_2018$fear <- as.factor(house_2018$fear)
+house_2018$anger <- as.factor(house_2018$anger)
+house_2018$sadness <- as.factor(house_2018$sadness)
+
+senate_2018$race <- as.factor(senate_2018$race)
+senate_2018$categorystate <- as.factor(senate_2018$categorystate)
+senate_2018$party <- as.factor(senate_2018$party)
+senate_2018$issue20 <- as.factor(senate_2018$issue20)
+senate_2018$issue65 <- as.factor(senate_2018$issue65)
+senate_2018$fear <- as.factor(senate_2018$fear)
+senate_2018$anger <- as.factor(senate_2018$anger)
+senate_2018$sadness <- as.factor(senate_2018$sadness)
+
+```
+
+
+
+Merge Data
+```{r}
+library(dplyr)
+#2006
+m <- merge(gov_2006, Gov_2006, by.x="vidfile", by.y="doc_id", all = TRUE)
+Gov_2006_f <- m %>% distinct(vidfile, .keep_all = TRUE)
+
+m <- merge(federal_2006, Federal_2006, by.x="vidfile", by.y="doc_id", all = TRUE)
+Federal_2006_f <- m %>% distinct(vidfile, .keep_all = TRUE)
+
+#2010
+m <- merge(gov_2010, Gov_2010, by.x="vidfile", by.y="doc_id", all = TRUE)
+Gov_2010_f <- m %>% distinct(vidfile, .keep_all = TRUE)
+
+m <- merge(federal_2010, Federal_2010, by.x="vidfile", by.y="doc_id", all = TRUE)
+Federal_2010_f <- m %>% distinct(vidfile, .keep_all = TRUE)
+
+#2012
+m <- merge(gov_2012, Gov_2012, by.x="vidfile", by.y="doc_id", all = TRUE)
+Gov_2012_f <- m %>% distinct(vidfile, .keep_all = TRUE)
+
+m <- merge(house_2012, House_2012, by.x="vidfile", by.y="doc_id", all = TRUE)
+House_2012_f <- m %>% distinct(vidfile, .keep_all = TRUE)
+
+m <- merge(pres_2012, Pres_2012, by.x="vidfile", by.y="doc_id", all = TRUE)
+Pres_2012_f <- m %>% distinct(vidfile, .keep_all = TRUE)
+
+m <- merge(senate_2012, Senate_2012, by.x="vidfile", by.y="doc_id", all = TRUE)
+Senate_2012_f <- m %>% distinct(vidfile, .keep_all = TRUE)
+
+#2014
+m <- merge(gov_2014, Gov_2014, by.x="vidfile", by.y="doc_id", all = TRUE)
+Gov_2014_f <- m %>% distinct(vidfile, .keep_all = TRUE)
+
+m <- merge(house_2014, House_2014, by.x="vidfile", by.y="doc_id", all = TRUE)
+House_2014_f <- m %>% distinct(vidfile, .keep_all = TRUE)
+
+m <- merge(senate_2014, Senate_2014, by.x="vidfile", by.y="doc_id", all = TRUE)
+Senate_2014_f <- m %>% distinct(vidfile, .keep_all = TRUE)
+
+#2016
+m <- merge(gov_2016, Gov_2016, by.x="vidfile", by.y="doc_id", all = TRUE)
+Gov_2016_f <- m %>% distinct(vidfile, .keep_all = TRUE)
+
+m <- merge(house_2016, House_2016, by.x="vidfile", by.y="doc_id", all = TRUE)
+House_2016_f <- m %>% distinct(vidfile, .keep_all = TRUE)
+
+m <- merge(senate_2016, Senate_2016, by.x="vidfile", by.y="doc_id", all = TRUE)
+Senate_2016_f <- m %>% distinct(vidfile, .keep_all = TRUE)
+
+m <- merge(pres_2016, Pres_2016, by.x="vidfile", by.y="doc_id", all = TRUE)
+Pres_2016_f <- m %>% distinct(vidfile, .keep_all = TRUE)
+
+#2018 
+m <- merge(gov_2018, Gov_2018, by.x="vidfile", by.y="doc_id", all = TRUE)
+Gov_2018_f <- m %>% distinct(vidfile, .keep_all = TRUE)
+
+m <- merge(house_2018, House_2018, by.x="vidfile", by.y="doc_id", all = TRUE)
+House_2018_f <- m %>% distinct(vidfile, .keep_all = TRUE)
+
+m <- merge(senate_2018, Senate_2018, by.x="vidfile", by.y="doc_id", all = TRUE)
+Senate_2018_f <- m %>% distinct(vidfile, .keep_all = TRUE)
+
+```
+
+
+#Make Party Column Consistent for later analysis. 
+```{r}
+levels(Federal_2010_f$party)[match("Democrat",levels(Federal_2010_f$party))] <- 1
+levels(Federal_2010_f$party)[match("Republican",levels(Federal_2010_f$party))] <- 2
+
+levels(Gov_2010_f$party)[match("Democrat",levels(Gov_2010_f$party))] <- 1
+levels(Gov_2010_f$party)[match("Republican",levels(Gov_2010_f$party))] <- 2
+
+levels(Gov_2012_f$party)[match("DEMOCRAT",levels(Gov_2012_f$party))] <- 1
+levels(Gov_2012_f$party)[match("REPUBLICAN",levels(Gov_2012_f$party))] <- 2
+
+levels(Gov_2014_f$party)[match("DEMOCRAT",levels(Gov_2014_f$party))] <- 1
+levels(Gov_2014_f$party)[match("REPUBLICAN",levels(Gov_2014_f$party))] <- 2
+
+levels(Gov_2016_f$party)[match("DEMOCRAT",levels(Gov_2016_f$party))] <- 1
+levels(Gov_2016_f$party)[match("REPUBLICAN",levels(Gov_2016_f$party))] <- 2
+
+levels(Gov_2018_f$party)[match("DEMOCRAT",levels(Gov_2018_f$party))] <- 1
+levels(Gov_2018_f$party)[match("REPUBLICAN",levels(Gov_2018_f$party))] <- 2
+
+levels(House_2012_f$party)[match("DEMOCRAT",levels(House_2012_f$party))] <- 1
+levels(House_2012_f$party)[match("REPUBLICAN",levels(House_2012_f$party))] <- 2
+
+levels(House_2014_f$party)[match("DEMOCRAT",levels(House_2014_f$party))] <- 1
+levels(House_2014_f$party)[match("REPUBLICAN",levels(House_2014_f$party))] <- 2
+
+levels(House_2016_f$party)[match("DEMOCRAT",levels(House_2016_f$party))] <- 1
+levels(House_2016_f$party)[match("REPUBLICAN",levels(House_2016_f$party))] <- 2
+
+levels(House_2018_f$party)[match("DEMOCRAT",levels(House_2018_f$party))] <- 1
+levels(House_2018_f$party)[match("REPUBLICAN",levels(House_2018_f$party))] <- 2
+
+levels(Pres_2012_f$party)[match("DEMOCRAT",levels(Pres_2012_f$party))] <- 1
+levels(Pres_2012_f$party)[match("REPUBLICAN",levels(Pres_2012_f$party))] <- 2
+
+levels(Pres_2016_f$party)[match("DEMOCRAT",levels(Pres_2016_f$party))] <- 1
+levels(Pres_2016_f$party)[match("REPUBLICAN",levels(Pres_2016_f$party))] <- 2
+
+levels(Senate_2012_f$party)[match("DEMOCRAT",levels(Senate_2012_f$party))] <- 1
+levels(Senate_2012_f$party)[match("REPUBLICAN",levels(Senate_2012_f$party))] <- 2
+
+levels(Senate_2014_f$party)[match("DEMOCRAT",levels(Senate_2014_f$party))] <- 1
+levels(Senate_2014_f$party)[match("REPUBLICAN",levels(Senate_2014_f$party))] <- 2
+
+levels(Senate_2016_f$party)[match("DEMOCRAT",levels(Senate_2016_f$party))] <- 1
+levels(Senate_2016_f$party)[match("REPUBLICAN",levels(Senate_2016_f$party))] <- 2
+
+levels(Senate_2018_f$party)[match("DEMOCRAT",levels(Senate_2018_f$party))] <- 1
+levels(Senate_2018_f$party)[match("REPUBLICAN",levels(Senate_2018_f$party))] <- 2
+
+```
+
+stack all dataset together  
+```{r}
+library(data.table)
+
+df <- rbindlist(list(Gov_2006_f,Federal_2006_f, 
+Gov_2010_f, Federal_2010_f,
+Gov_2012_f, House_2012_f, Pres_2012_f, Senate_2012_f,
+Gov_2014_f, House_2014_f, Senate_2014_f,
+Gov_2016_f, House_2016_f, Senate_2016_f, Pres_2016_f,
+Gov_2018_f, House_2018_f, Senate_2018_f))
+
+
+write.csv(df, file ="text_analysis_Weslyan_Ad.csv" )
+save(df, file = "text_analysis_Weslyan_Ad.RData")
+
+```
+
+
