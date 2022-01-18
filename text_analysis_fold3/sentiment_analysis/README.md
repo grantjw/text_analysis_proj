@@ -11,16 +11,16 @@
 [logo]: https://github.com/grantjw/text_analysis_proj2/blob/main/text_analysis_fold3/sentiment_analysis/Sentiment_China_HuLiu_New_issue65%2C%20Party%2C%20Election.PNG
 
 
-![alt text][logo]
+![alt text][logo1]
 
-[logo]: https://github.com/grantjw/text_analysis_proj2/blob/main/text_analysis_fold3/sentiment_analysis/Sentiment_China_HuLiu_New_issue65%2C%20Party%2C%20Year.PNG
-
-
-![alt text][logo]
-
-[logo]: https://github.com/grantjw/text_analysis_proj2/blob/main/text_analysis_fold3/sentiment_analysis/Sentiment_China_HuLiu_New_issue65%2C%20Party.PNG
+[logo1]: https://github.com/grantjw/text_analysis_proj2/blob/main/text_analysis_fold3/sentiment_analysis/Sentiment_China_HuLiu_New_issue65%2C%20Party%2C%20Year.PNG
 
 
-![alt text][logo]
+![alt text][logo2]
 
-[logo]: https://github.com/grantjw/text_analysis_proj2/blob/main/text_analysis_fold3/sentiment_analysis/Sentiment_China_HuLiu_New_issue65.PNG
+[logo2]: https://github.com/grantjw/text_analysis_proj2/blob/main/text_analysis_fold3/sentiment_analysis/Sentiment_China_HuLiu_New_issue65%2C%20Party.PNG
+
+
+![alt text][logo3]
+
+[logo3]: https://github.com/grantjw/text_analysis_proj2/blob/main/text_analysis_fold3/sentiment_analysis/Sentiment_China_HuLiu_New_issue65.PNG
