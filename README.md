@@ -21,5 +21,5 @@
 
 
 # Code and Resources Used 
-* Python and R
-* Packages: 
+* Python version: 3.8
+* R version: Version 1.3.1093
