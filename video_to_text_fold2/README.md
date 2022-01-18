@@ -2,7 +2,7 @@
 * Convert 30,000 campaign video data to raw text using IBM’s Speech-To-Text API with Python (folder 2)
 
 ## Steps 
-**1)** Download 30,000 campaign video data from "Video_Data." 
+**1)** Download 30,000 campaign video data from "video_data." 
 
 
 **2)** "ibm-watson TT.py" converts video data to raw text files.
