@@ -1,0 +1,328 @@
+rm(list=ls())
+
+# China vs. Non-China
+```{r}
+setwd("C:/Users/grant/Desktop/Desktop/Sentiment Analysis_New_issue65/")
+load("sentiment_df_HuLiu_new_issue65.Rdata")
+
+
+library(ggplot2)
+library(dplyr)
+
+df2 <- df1 %>% mutate(china =
+                     case_when(issue65_new == 0 ~ "Non-China Ads", 
+                               issue65_new == 1 ~ "China Ads"))
+
+# Boxplots
+p1 <- df2 %>% 
+  filter(!is.na(china)) %>% 
+  ggplot(aes(x=china, y=difference, fill = issue65_new)) +
+  geom_boxplot() 
+p1 + theme_classic()
+
+
+# Mean plots
+
+#install.packages("ggpubr")
+library(ggpubr)
+df3 <- df2 %>%
+      filter(!is.na(issue65_new))
+
+
+
+ggerrorplot(df3, x = "china", y = "difference", 
+            desc_stat = "mean_sd",
+            color = "china", ci=0.95,
+            legend.title = "",
+            ylim=c(-2,5),
+            title="Average sentiment scores for China vs. non-China Ads",
+            position = position_dodge(0.4)     # Adjust the space between bars
+            ) + 
+            ylab("Sentinent Score") + xlab("") + 
+            theme(legend.position = "none") +
+            geom_hline(yintercept=0, linetype="dashed", color = "black")
+
+t.test(df3$difference[df3$issue65_new=="0"], df3$difference[df3$issue65_new=="1"])
+```
+
+**We can see that median sentiment score is lower for China than Non-China ads** 
+
+# China vs. Non China with party 
+```{r}
+
+df2 <- df1 %>% mutate(china =
+                     case_when(issue65_new == 1 ~ "China Ads", 
+                               issue65_new == 0 ~ "Non-China Ads"),
+                     party =
+                       case_when(party==1 ~ "Democrat",
+                                 party==2 ~ "Republican"))
+# Boxplots
+p1 <- ggplot(df2, aes(x=china, y=difference, fill = party)) +
+  geom_boxplot()
+p1 + scale_x_discrete(limits=c("Non-China", "China")) + theme_classic() +
+  scale_fill_manual(values=c("#003CFF", "#FF0000"))
+
+
+# Mean plots
+
+#install.packages("ggpubr")
+library(ggpubr)
+df3 <- df2 %>%
+      filter(!is.na(issue65_new))
+
+ggerrorplot(df3, x = "china", y = "difference", 
+            desc_stat = "mean_sd",
+            color = "party", palette = c("blue", "red"),ci=0.95,
+            legend.title = "",
+            title="Average sentiment scores for China vs. non-China Ads by party",
+            position = position_dodge(0.4)     # Adjust the space between bars
+            ) + 
+            ylab("Sentinent Score") + xlab("") + 
+            geom_hline(yintercept=0, linetype="dashed", color = "black")
+
+t.test(df3$difference[df3$issue65_new=="0" & df3$party=="Republican"], 
+       df3$difference[df3$issue65_new=="1" & df3$party=="Republican"])
+
+t.test(df3$difference[df3$issue65_new=="0" & df3$party=="Democrat"], 
+       df3$difference[df3$issue65_new=="1" & df3$party=="Democrat"])
+
+```
+
+**We see that Republican China Ads having a lower median than the rest. Since there is not much difference in Democrat China vs. Non China ads, we can deduce that the lower median for China Ads in the first graph was driven by Republican China ads mostly.** 
+
+# 3) China vs. Non China with trade  
+
+```{r}
+p1 <- ggplot(df1, aes(x=issue65_new, y=difference, fill = issue20)) +
+  geom_boxplot()
+p1 + scale_x_discrete(limits=c("0", "1")) + 
+  theme_classic() 
+```
+
+**Surprisingly, we see that non-trade China Ad sentiment scores as the lowest and even lower than trade China Ad sentiment scores. This implies that 1) trade may not be a key factor in decreasing the sentiment scores. 2) Non-trade may be one of the drivers of lowering the sentiment scores** 
+
+
+# 4) China vs. Non China over year
+
+```{r}
+p1 <- df1 %>%
+      filter(issue65_new == 1 | issue65_new ==0) %>% 
+      ggplot(aes(x=year, y=difference, fill = issue65_new)) +
+      geom_boxplot()
+p1 + 
+  theme_classic() 
+```
+
+**China Ads in year 2006 and 2012, 2014 have a lower score than Non-China Ads. For other years, the sentiment scores between China and Non-China Ads are similar. This means that China Ads have lower or equal sentiment scores to that of Non-China Ads** 
+
+
+# 5) China & trade with year   
+
+* we create a new variable "China_trade" that indicates as follows: 
+  + "China_trade" == NC_NT  -> No China, No Trade 
+  + "China_trade" == C_NT  -> Yes China, No Trade 
+  + "China_trade" == NC_T  -> No China, Yes Trade 
+  + "China_trade" == C_T  -> Yes China, Yes Trade 
+
+```{r}
+df1 <- df1 %>% mutate(china_trade =
+                     case_when(issue65_new == 0 & issue20 == 0 ~ "NC_NT", 
+                               issue65_new == 1 & issue20 == 0 ~ "C_NT",
+                               issue65_new == 0 & issue20 == 1 ~ "NC_T",
+                               issue65_new == 1 & issue20 == 1 ~ "C_T")
+)
+
+p1 <- df1 %>%
+      filter(!is.na(china_trade)) %>% 
+      ggplot(aes(x=year, y=difference, fill = china_trade)) +
+      geom_boxplot()
+p1 + 
+  theme_classic() + 
+  scale_fill_manual(values=c("#003CFF", "#66B9FF", "#FF0000", "#BA0000"))
+```
+
+**China Ads are colored in shades of Blue while Non-China Ads are colored in shades of red. We also confirm here that Non-trade China Ads having a lower sentiment score than trade China Ads.**  
+
+
+# 5) China & party with year   
+
+* we create a new variable "China_party" that indicates as follows: 
+  + "China_party" == NC_D  -> No China, Dem
+  + "China_party" == C_R  -> Yes China, Rep
+  + "China_party" == NC_R  -> No China, Rep
+  + "China_party" == C_D  -> Yes China, Dem
+```{r}
+# we create a new variable "China_party" that indicates as follows 
+df1 <- df1 %>% mutate(china_party =
+                     case_when(issue65_new == 0 & party == 1 ~ "Non-China, Democrat", 
+                               issue65_new == 1 & party == 2 ~ "China, Republican",
+                               issue65_new == 0 & party == 2 ~ "Non-China, Republican",
+                               issue65_new == 1 & party == 1 ~ "China, Democrat")
+                     
+)
+
+# Boxplots
+
+p1 <- df1 %>%
+      filter(!is.na(china_party)) %>% 
+      ggplot(aes(x=year, y=difference, fill = china_party)) +
+      geom_boxplot()
+p1 + 
+  theme_classic() +
+  scale_fill_manual(values=c("#003CFF", "#FF0000", "#66B9FF", "#BA0000"))
+
+
+# Mean plots
+
+#install.packages("ggpubr")
+library(ggpubr)
+df2 <- df1 %>%
+      filter(!is.na(china_party))
+
+
+ggerrorplot(df2, x = "year", y = "difference", 
+            desc_stat = "mean_sd",
+            color = "china_party", palette = c("blue", "#FF0000", "#66B9FF", "pink"), ci=0.95,
+            legend.title = "",
+            title="Average sentiment scores for China vs. non-China Ads by party and year",
+            position = position_dodge(0.4)     # Adjust the space between bars
+            ) + 
+            ylab("Sentinent Score") + xlab("") + 
+            geom_hline(yintercept=0, linetype="dashed", color = "black")
+```  
+
+** We also confirm here that China Republican Ads as having significantly lower sentiment scores than other Ads. This means that the main driver of lower sentiment scores are China Republican Ads. Moreover, Non-China Republican sentiment scores are lower than Non-China Democrat sentiment scores.** 
+
+# 6) China & Trade & Party with year 
+
+* we create a new variable "China_trade_party" that indicates as follows: 
+  + "China_trade_party" == NC_D_T -> No China, Dem, Yes Trade
+  + "China_trade_party" == C_D_T -> Yes China, Dem, Yes Trade
+  + "China_trade_party" == NC_R_T -> No China, Rep, Yes Trade
+  + "China_trade_party" == C_R_T -> Yes China, Rep ,Yes Trade
+  + "China_trade_party" == NC_D_NT -> No China, Dem, No Trade
+  + "China_trade_party" == C_D_NT -> Yes China, Dem, No Trade
+  + "China_trade_party" == NC_R_NT -> No China, Rep, No Trade
+  + "China_trade_party" == C_R_NT -> Yes China, Rep, No Trade 
+
+```{r}
+df1 <- df1 %>% mutate(china_trade_party =
+                     case_when(issue65_new == 0 & party == 1 & issue20 == 1 ~ "NC_D_T", 
+                               issue65_new == 1 & party == 1 & issue20 == 1 ~ "C_D_T",
+                               issue65_new == 0 & party == 2 & issue20 == 1 ~ "NC_R_T",
+                               issue65_new == 1 & party == 2 & issue20 == 1 ~ "C_R_T",
+                               issue65_new == 0 & party == 1 & issue20 == 0 ~ "NC_D_NT",
+                               issue65_new == 1 & party == 1 & issue20 == 0 ~ "C_D_NT",
+                               issue65_new == 0 & party == 2 & issue20 == 0 ~ "NC_R_NT",
+                               issue65_new == 1 & party == 2 & issue20 == 0 ~ "C_R_NT",
+                               ))
+
+p1 <- df1 %>%
+      filter(!is.na(china_trade_party)) %>% 
+      ggplot(aes(x=year, y=difference, fill = china_trade_party)) +
+      geom_boxplot()
+p1 + 
+  theme_classic() +
+  scale_fill_manual(values=c("#FFDB6D", "#C4961A", "#F4EDCA", 
+                "#D16103", "#C3D7A4", "#52854C", "#4E84C4", "#293352"))
+
+
+```
+
+**This boxplot reassures our analysis so far. The main driver of lower sentiment scores must be Non-trade, China, and Republicans. Here we see that "C_R_NT" as having a significantly lower sentiment score than the rest. Since trade is not the biggest interest of our analysis, we turn to other graphs that does not include trade**  
+
+
+# 7) China & Party by election type 
+
+```{r}
+# we create a new variable "China_party" that indicates as follows 
+df1 <- df1 %>% mutate(china_party =
+                     case_when(issue65_new == 0 & party == 1 ~ "Non-China, Democrat", 
+                               issue65_new == 1 & party == 2 ~ "China, Republican",
+                               issue65_new == 0 & party == 2 ~ "Non-China, Republican",
+                               issue65_new == 1 & party == 1 ~ "China, Democrat")
+                     
+)
+
+df1$electype2[df1$electype=="gov"] <- "Gubernatorial"
+df1$electype2[df1$electype=="house" | df1$electype=="senate"] <- "Federal"
+df1$electype2[df1$electype=="pres"] <- "Presidential"
+
+
+# Boxplots
+
+p1 <- df1 %>%
+      filter(!is.na(china_party)) %>% 
+      ggplot(aes(x=electype2, y=difference, fill = china_party)) +
+      geom_boxplot()
+p1 + 
+  theme_classic() +
+  scale_fill_manual(values=c("#003CFF", "#FF0000", "#66B9FF", "#BA0000")) + ylim(-10, 10)
+
+
+# Mean plots
+
+#install.packages("ggpubr")
+library(ggpubr)
+df2 <- df1 %>%
+      filter(!is.na(china_party))
+
+
+ggerrorplot(df2, x = "electype2", y = "difference", 
+            desc_stat = "mean_sd",
+            color = "china_party", palette = c("blue", "#FF0000", "#66B9FF", "pink"), ci=0.95,
+            legend.title = "",
+            title="Average sentiment scores for China vs. non-China Ads by party and election",
+            position = position_dodge(0.4)     # Adjust the space between bars
+            ) + 
+            ylab("Sentinent Score") + xlab("") + 
+            geom_hline(yintercept=0, linetype="dashed", color = "black")
+
+```  
+
+# Scatterpoint plots with Year, China, Party 
+
+```{r}
+df_points_1 <- df1 %>% group_by(year, issue65_new,party) %>%
+  #filter(party == 2) %>%
+  dplyr::summarise(Sent_Difference = mean(difference, na.rm = FALSE))
+
+p1 <- df_points_1 %>%
+      filter(!is.na(issue65_new)) %>% 
+      ggplot(aes(x=year, y=Sent_Difference)) +
+      geom_point(aes(shape = issue65_new, color = party), size =3) +
+      scale_shape_manual(values = c(1,2)) +
+      theme(legend.position = "top") +
+      scale_color_manual(values = c("#003CFF", "#FF0000")) 
+      
+p1
+```
+
+**Here, instead of boxplots which plots median scores, we plot average scores. We see here that China  Republican Ads sentiment scores (red and triangle shaped) as the lowest of all across all years.** 
+
+
+# Scatterpoint plots with Electype, China, Party 
+```{r}
+df_points_1 <- df1 %>% group_by(electype, issue65_new,party) %>%
+  #filter(party == 2) %>%
+  dplyr::summarise(Sent_Difference = mean(difference, na.rm = FALSE))
+
+p1 <- df_points_1 %>%
+      filter(!is.na(issue65_new)) %>% 
+      ggplot(aes(x=electype, y=Sent_Difference)) +
+      geom_point(aes(shape = issue65_new, color = party), size =3) +
+      scale_shape_manual(values = c(1,2)) +
+      theme(legend.position = "top") +
+      scale_color_manual(values = c("#003CFF", "#FF0000")) 
+      
+
+p1
+```
+
+**Here, we change the x-axis to "electype" and see the same result, where the China Republican sentiment scores having the lowest sentiment scores across all election types. I will continue the analysis using tableau**  
+
+
+```{r}
+
+
+``` 
