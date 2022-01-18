@@ -30,4 +30,4 @@
 
 ![alt text][logo4]
 
-[logo3]: https://github.com/grantjw/text_analysis_proj2/blob/main/text_analysis_fold3/sentiment_analysis/Tableau_Plots.pdf
+[logo4]: https://github.com/grantjw/text_analysis_proj2/blob/main/text_analysis_fold3/sentiment_analysis/Tableau_Plots.pdf
