@@ -13,4 +13,4 @@
 
 **4)** "text_analysis_Wesleyan_Ad.Rdata" and "text_analysis_Weslyan_Ad.csv" are outputs from step 3. We use this data for text analysis, explained in folder 3. 
 
-* Further specifics on video to text conversion can be reached at ["read.me.pdf"](https://github.com/grantjw/text_analysis_proj2/blob/main/video_to_text_fold2/read.me.pdf)
+* Further specifics of the video to text conversion can be reached at ["read.me.pdf"](https://github.com/grantjw/text_analysis_proj2/blob/main/video_to_text_fold2/read.me.pdf)
