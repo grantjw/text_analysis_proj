@@ -4,7 +4,6 @@
 * "negativewords" and "positivewords" is the Hu_Liu dictionary that I use to conduct sentiment analysis. 
 
 # Sentiment Analysis Results 
-Reference-style: 
 ![alt text][logo]
 
 [logo]: https://github.com/grantjw/text_analysis_proj2/blob/main/text_analysis_fold3/sentiment_analysis/Sentiment_China_HuLiu_New_issue65%2C%20Party%2C%20Election.PNG
