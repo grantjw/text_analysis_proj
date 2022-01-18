@@ -22,4 +22,4 @@
 
 # Code and Resources Used 
 * Python version: 3.8
-* R version: Version 1.3.1093
+* R Version: 1.3.1093
