@@ -3,13 +3,13 @@
 
 # Wordcloud Analysis Results 
 
-**## Democrats**
+## **Democrats**
 
 ![alt text][logo1]
 
 [logo1]: https://github.com/grantjw/text_analysis_proj2/blob/main/text_analysis_fold3/wordcloud/WordCloud_Dem.png
 
-**## Republican**
+## **Republican**
 
 ![alt text][logo2]
 
