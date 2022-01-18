@@ -1,6 +1,6 @@
 # Overview
 * Conduct data cleaning/exploratory data Analysis(EDA) on Wesleyan Media Project (WMP) tracking data. 
-* There are largerly two parts to this section: 
+* There are largerly two parts to this section (each section has its own data cleaning in the r code): 
 1) Using the tracking data to create plots for each level of races by each year. 
 2) Creating a descriptive statistics chart 
 
