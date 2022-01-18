@@ -28,6 +28,4 @@
 [logo3]: https://github.com/grantjw/text_analysis_proj2/blob/main/text_analysis_fold3/sentiment_analysis/Sentiment_China_HuLiu_New_issue65.PNG
 
 
-![alt text][logo4]
 
-[logo4]: https://github.com/grantjw/text_analysis_proj2/blob/main/text_analysis_fold3/sentiment_analysis/Tableau_Plots.pdf
