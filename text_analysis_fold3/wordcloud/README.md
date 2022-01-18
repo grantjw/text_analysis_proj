@@ -8,7 +8,7 @@
 
 ![alt text][logo1]
 
-[logo1]: https://github.com/grantjw/text_analysis_proj2/blob/main/text_analysis_fold3/wordcloud/WordCloud_Dem.png
+[logo1]: https://github.com/grantjw/text_analysis_proj2/blob/main/text_analysis_fold3/wordcloud/WordCloud_China-Dem.png
 
 
 
@@ -16,4 +16,4 @@
 
 ![alt text][logo2]
 
-[logo2]: https://github.com/grantjw/text_analysis_proj2/blob/main/text_analysis_fold3/wordcloud/WordCloud_Rep.png
+[logo2]: https://github.com/grantjw/text_analysis_proj2/blob/main/text_analysis_fold3/wordcloud/Wordcloud_China-Rep.png
