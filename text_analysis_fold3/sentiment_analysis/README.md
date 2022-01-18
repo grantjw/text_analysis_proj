@@ -3,7 +3,7 @@
 * "Plots_HuLiu_New_issue65" uses the new dataframe "entiment_df_HuLiu_new_issue65" to generate plots that summarize the sentiment analysis, as shown below. 
 * "negativewords" and "positivewords" is the Hu_Liu dictionary that I use to conduct sentiment analysis. 
 * The reuslts for AFINN dictionary are in "afinn" folder but not presented in the results below. The AFINN sentiment analysis results are almost identical. 
-* "sentiment plots" further analyzes the sentiment scores using Tableau. Results are seen in "Tableau_Plots.pdf"
+* "sentiment plots" further analyzes the sentiment scores using Tableau. Results are seen in "Tableau_Plots"
 
 # Sentiment Analysis Results 
 
