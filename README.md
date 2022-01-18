@@ -1,4 +1,4 @@
-# Examining the racialization of American public opinion utilizing text analysis: Project 2 Overview
+# Examining the racialization of American public opinion utilizing text analysis: Overview
 ## Project Goal
 * Examine the role of anti-China elite rhetoric in aggregating public opinion up to the level of American foreign policymaking. 
 ## Method
