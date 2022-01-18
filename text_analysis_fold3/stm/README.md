@@ -3,3 +3,10 @@
 
 # STM Results 
 
+![alt text][logo]
+
+[logo]: https://github.com/grantjw/text_analysis_proj2/blob/main/text_analysis_fold3/stm/sent_prev_china.PNG
+
+![alt text][logo1]
+
+[logo1]: https://github.com/grantjw/text_analysis_proj2/blob/main/text_analysis_fold3/stm/sent_prev_china_2.PNG
