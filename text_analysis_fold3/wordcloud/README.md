@@ -1,5 +1,5 @@
 # Overview
-* "WordCloud_NEW" conducts wordcloud analysis.
+* "WordCloud_NEW" conducts wordcloud analysis using the "text_analysis_Weslyan_Ad" data that contains transcribed raw text. 
 
 # Wordcloud Analysis Results 
 
