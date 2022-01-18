@@ -1,1 +1,19 @@
+# Overview
+* "WordCloud_NEW" conducts wordcloud analysis.
 
+# Wordcloud Analysis Results 
+
+
+![alt text][logo]
+
+[logo]: https://github.com/grantjw/text_analysis_proj2/blob/main/text_analysis_fold3/wordcloud/Wordcloud_All%20China_(NEW).png
+
+
+![alt text][logo1]
+
+[logo1]: https://github.com/grantjw/text_analysis_proj2/blob/main/text_analysis_fold3/wordcloud/WordCloud_Dem.png
+
+
+![alt text][logo2]
+
+[logo2]: https://github.com/grantjw/text_analysis_proj2/blob/main/text_analysis_fold3/wordcloud/WordCloud_Rep.png
