@@ -2,6 +2,7 @@
 * "Sentiment_Analysis_HuLiu_New_issue65" uses the dataframe "text_analysis_Weslyan_Ad" (with raw text) to conduct sentiment analysis using the Hu_Liu dictionary. This outputs a new dataframe "sentiment_df_HuLiu_new_issue65" with sentiment scores and raw text.
 * "Plots_HuLiu_New_issue65" uses the new dataframe "entiment_df_HuLiu_new_issue65" to generate plots that summarize the sentiment analysis, as shown below. 
 * "negativewords" and "positivewords" is the Hu_Liu dictionary that I use to conduct sentiment analysis. 
+* The reuslts for AFINN dictionary are in "afinn" folder but not presented in the results below. The AFINN sentiment analysis results are almost identical. 
 
 # Sentiment Analysis Results 
 
