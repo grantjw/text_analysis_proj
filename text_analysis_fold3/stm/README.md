@@ -1,9 +1,8 @@
 # Overview
 * "stm" conducts Structural Topic Modeling with prevalence using the converted raw text data "texted_analysis_Weslyan_Ad" 
 
-# STM Results (condensed version) 
+# Results (condensed version) 
 
-## STM with prevalence (China) 
 
 
 ![alt text][logo]
@@ -16,7 +15,6 @@
 
 
 
-## STM with prevalence (Treat NC-R, NC-D, C-R, C-D) 
 
 
 ![alt text][logo]
