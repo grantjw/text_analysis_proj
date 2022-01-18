@@ -10,3 +10,5 @@
 6) cd - zip.csv
 
 * This outputs  "merge_df_New_issue65.Rdata" which is a dataset that merges raw text, sentiment scores, and different fips code with DMA for further analysis. 
+* With this data, we have two csv files "Wesleyan TV ad sentiment by county.csv" and "Wesleyan TV ad sentiment by region.csv" 
+
