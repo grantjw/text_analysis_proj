@@ -4,3 +4,4 @@
 ## Steps
 * Conduct sentiment analysis using Hu_Liu & AFINN dictionary. Refer to "sentiment_analysis" for detailed work. 
 * Conduct Structural Topic Modeling (STM). Refer to "stm" for detailed work. 
+* Conduct Word Cloud Analysis. Refer to "wordcloud" for detailed work. 
