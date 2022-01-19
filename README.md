@@ -23,3 +23,4 @@
 # Code and Resources Used 
 * Python version: 3.8
 * R Version: 1.3.1093
+* Tableau version: 2021.1
